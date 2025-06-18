@@ -20,13 +20,15 @@ return(
 <nav className="nav-wrapper blue darken-3" style={{whiteSpace:"nowrap"}}>
 <div>
     <a href="/alunos">App-Gestão de Alunos.</a>
-    <a href="#" data-target="mobile-menu" className="sidenav-trigger">
+    <a href="#" data-target="mobile-    
+    
+    menu" className="sidenav-trigger">
         <i className="material-icons">menu</i>
-    </a>
+            '''''''     </a>
     <ul className="right hide-on-med-and-down">
         
         <li>
-            <Link to="/">Login</Link>
+            <Link to="/"    >Login</Link>
         </li>
         <li>
             <Link to="/alunos">Alunos</Link>
