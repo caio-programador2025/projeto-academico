@@ -34,7 +34,7 @@ return(
         aria-label={aluno.concluido?"Aluno concluído. ":"Aluno não concluído."}
         >
             <h1>
-                {aluno.titulo}
+                {aluno.titulo}-{aluno.email}
             </h1>
             <div className="grid-botoes">
                 <button

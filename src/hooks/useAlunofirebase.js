@@ -3,24 +3,23 @@ import react, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc} from "firebase/firestore/lite";
-
+import { EmailAuthCredential } from "firebase/auth/web-extension";
 
 const useAlunofirebase = () => {
     const [id , setId] = useState(null)
     const [titulo, settitulo] = useState("")
+    const [email, setEmail]= useState("")
     const [concluido, setconcluido] = useState(false)
     const [listaAlunos, setListaAluno] = useState([])
 
-
-
 const auth = getAuth()
+
 const usuario = auth.currentUser
 
 const navigate = useNavigate()
 
-
 const buscaAlunos = async() => {
-const colecao_Alunos = collection(db, "alunos")
+    const colecao_Alunos = collection(db, "alunos")
  
  const docs_Alunos = await getDocs( colecao_Alunos)
 
@@ -29,27 +28,30 @@ const colecao_Alunos = collection(db, "alunos")
         ... doc.data()
     }))
     .filter(aluno => aluno.uid === usuario.uid)
+    
     setListaAluno(listaAlunoUsuario)
  
-
-
 }
 
     useEffect( () => {
-        buscaAlunos() 
-    },[usuario ])
 
+        buscaAlunos()
 
-    const adicionar_aluno = async(titulo) => {
+},[usuario ])
+
+    const adicionar_aluno = async(titulo,email) => {
 const novoAluno = {
 
     titulo: titulo,
+    email: email,
 concluido: false, 
 uid: usuario.uid
 }
 try {
     const novoRegistro = await addDoc(collection(db, "alunos"), novoAluno)
-     alert ("Aluno Adicionado com sucesso")
+ buscaAlunos()
+ 
+    alert ("Aluno Adicionado com sucesso")
 
 } catch (error) {
     alert ("Erro ao adicionar a aluno" + error)
@@ -59,13 +61,15 @@ try {
 
     const exibir_detalhe_aluno = (id) => {
         const aluno = listaAlunos.find(aluno => aluno.id = id)
-        navigate("/alunoDetalhes", {state: aluno})
+            navigate("/alunoDetalhes", {state: aluno})
     }
+
+
     const excluir_aluno = async(id) => {
 try {
     await deleteDoc(doc(db, "alunos" , id))
 
-    buscaAlunos()
+buscaAlunos()
 
     alert ("Aluno excluido com sucesso")  
 } catch (error) {
@@ -73,12 +77,12 @@ try {
 }
     }
     
-    
     const alterar_aluno = async(aluno_editado) =>{
 try {
     const registro_aluno = doc(db,"aluno", aluno_editado.id)
     await updateDoc(registro_aluno,{
         titulo: aluno_editado.titulo,
+        email: aluno_editado.email,
         concluido: aluno_editado.concluido
     }
     )
@@ -92,6 +96,7 @@ try {
     return {
         id, setId,
         titulo, settitulo,
+        email, setEmail,
         concluido, setconcluido,
         listaAlunos,setListaAluno,
         exibir_detalhe_aluno,

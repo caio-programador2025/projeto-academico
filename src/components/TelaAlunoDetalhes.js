@@ -16,11 +16,13 @@ navigate(-1)
 
     const [input_tituloAluno, setInput_tituloAluno] = useState(aluno.titulo)
 
+const[input_emailAluno, setInput_emailAluno]= useState(aluno.email)
+
 const [radio_concluido, setRadio_concluido] = useState(aluno.concluido)
 
 const {alterar_aluno} = useAlunofirebase()
 const handle_button_click_alterar = () =>{
-const alunoEditado = {...aluno, titulo: input_tituloAluno, concluido: radio_concluido}
+const alunoEditado = {...aluno, titulo: input_tituloAluno, email:input_emailAluno, concluido: radio_concluido}
 alterar_aluno(alunoEditado)
 navigate("/alunos")    
 }
@@ -37,7 +39,7 @@ Tela de Detalhamento - Aluno
 <div style={{textAlign:"left", padding:"10px"}}
 >
     <strong>
-        Título: 
+        Nome: 
         </strong>
 <input type="text" 
 aria-label="título" 
@@ -48,6 +50,20 @@ setInput_tituloAluno(campo.target.value)
 }}
 >
 </input>
+
+<strong>
+        Email: 
+        </strong>
+<input type="text" 
+aria-label="email" 
+value={input_emailAluno} 
+size={50}
+onChange={(campo) =>{
+setInput_emailAluno(campo.target.value)
+}}
+>
+</input>
+
 </div>
 <div style={{textAlign:"left", padding:"10px"}}>
 <strong>
