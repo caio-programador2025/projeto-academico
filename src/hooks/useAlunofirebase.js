@@ -3,7 +3,6 @@ import react, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import { addDoc, collection, deleteDoc, doc, getDocs, updateDoc} from "firebase/firestore/lite";
-import { EmailAuthCredential } from "firebase/auth/web-extension";
 
 const useAlunofirebase = () => {
     const [id , setId] = useState(null)
@@ -37,7 +36,7 @@ const buscaAlunos = async() => {
 
         buscaAlunos()
 
-},[usuario ])
+},[usuario])
 
     const adicionar_aluno = async(titulo,email) => {
 const novoAluno = {
@@ -60,7 +59,8 @@ try {
 
 
     const exibir_detalhe_aluno = (id) => {
-        const aluno = listaAlunos.find(aluno => aluno.id = id)
+    
+        const aluno = listaAlunos.find(aluno => aluno.id === id)
             navigate("/alunoDetalhes", {state: aluno})
     }
 
@@ -79,7 +79,8 @@ buscaAlunos()
     
     const alterar_aluno = async(aluno_editado) =>{
 try {
-    const registro_aluno = doc(db,"aluno", aluno_editado.id)
+    const registro_aluno = doc(db,"alunos", aluno_editado.id)
+    
     await updateDoc(registro_aluno,{
         titulo: aluno_editado.titulo,
         email: aluno_editado.email,
@@ -87,9 +88,9 @@ try {
     }
     )
     buscaAlunos()
-    alert(" Aluno alterado com sucesso:")
+    alert(" Aluno alterado com sucesso!!!")
 } catch (error) {
-    alert("Erro ao alterar aluno:")
+    alert("Erro ao alterar aluno: " + error)
     
 }
     }

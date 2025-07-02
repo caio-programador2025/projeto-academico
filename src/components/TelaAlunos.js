@@ -33,9 +33,9 @@ return(
         style={aluno.concluido?{borderLeft:"6px solid green"}:{borderLeft: "6px solid red"}}
         aria-label={aluno.concluido?"Aluno concluído. ":"Aluno não concluído."}
         >
-            <h1>
+            <p>
                 {aluno.titulo}-{aluno.email}
-            </h1>
+            </p>
             <div className="grid-botoes">
                 <button
                 aria-label="detalhes" 

@@ -1,13 +1,14 @@
 import React, {useState} from "react";
 import { useLocation, useNavigate} from "react-router-dom";
 import "./Alunos.css"
-import useAlunos from "../hooks/useAlunos";
-import useAlunofirebase from "../hooks/useAlunos";
+import useAlunofirebase from "../hooks/useAlunofirebase";
 
 const TelaAlunoDetalhes = () =>{
 
 const location = useLocation()
+
     const aluno = location.state||{}
+
     const navigate = useNavigate()
 
     const handle_button_click_voltar = () =>{
@@ -21,9 +22,11 @@ const[input_emailAluno, setInput_emailAluno]= useState(aluno.email)
 const [radio_concluido, setRadio_concluido] = useState(aluno.concluido)
 
 const {alterar_aluno} = useAlunofirebase()
+
 const handle_button_click_alterar = () =>{
 const alunoEditado = {...aluno, titulo: input_tituloAluno, email:input_emailAluno, concluido: radio_concluido}
 alterar_aluno(alunoEditado)
+
 navigate("/alunos")    
 }
 
